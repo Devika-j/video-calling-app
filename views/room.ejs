@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Teams Clone</title>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <link rel="stylesheet" href="styles.css">
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
+  <script src="https://kit.fontawesome.com/c939d0e917.js"></script>
+
+
+  <script>
+    const room_id = "<%=roomId%>";
+  </script>
+</head>
+
+<body>
+  <!-- <div class="header">
+    <div>
+      <h3>Meeting Room</h3>
+    </div>
+
+  </div> -->
+
+  </div>
+  <div class="main">
+    <div class="main__left">
+      <div class="accessibility-options">
+
+      </div>
+
+    </div>
+    <div class="main__center">
+      <div class="main-header">
+        <div class="main-header-left">
+          <h3>Meeting Room</h3>
+        </div>
+      </div>
+      <div class="video-options">
+        <div class="video-left">
+
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle participants-button" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-user-friends"></i></button><span id="target">
+            </span>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+              <button class="dropdown-item" type="button">new item</button>
+            </div>
+          </div>
+        </div>
+        <div id="invite-button" class="video-right main__controls__button">
+          <i class="fas fa-plus-square"></i>
+          <span class="invite-button">Invite</span>
+        </div>
+      </div>
+      <div class="videos__group">
+
+        <div id="video-grid">
+
+        </div>
+
+      </div>
+      <div class="options">
+        <div class="main__controls">
+          <div class="main__controls__block">
+            <div onclick="muteUnmute()" class="main__controls__button main__mute_button">
+              <i class="fa fa-microphone"></i>
+            </div>
+            <div onclick="playStop()" class="main__controls__button main__video_button">
+              <i class="fas fa-video"></i>
+            </div>
+            <!-- <div id="showChat" class="main__controls__button main__chat_button">
+            <i class="fa fa-comment"></i>
+          </div> -->
+            <div class="main__controls__button end-button">
+              <span class="leave_meeting">End Call</span>
+            </div>
+            <div onclick="toggleFullScreen()" class="main__controls__button">
+              <i class="fas fa-expand"></i>
+            </div>
+            <div class="main__controls__button">
+              <i class="fas fa-user-plus"></i>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="main__right">
+      <!-- <div class="main__header">
+            <h6>Chat</h6>
+      </div> -->
+      <div class="main-header">
+        <div class="main-header-right main__controls__button chat-button">
+          <i class="far fa-comment-dots"></i>
+          <span class="main-header-right">Chat</span>
+        </div>
+
+
+      </div>
+      <div class="main__chat_window">
+        <div class="messages">
+
+        </div>
+
+      </div>
+      <div class="main__message_container">
+        <input id="chat_message" type="text" placeholder="Type a message">
+        <div id="send" class="main__controls__button send-button">
+          <span>Send</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+</body>
+<script src="script.js" charset="utf-8"></script>
+
+</html>
