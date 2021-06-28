@@ -1,0 +1,8 @@
+<h1 class="mt-4">Dashboard</h1>
+<p class="lead mb-3">Welcome <%=name %></p>
+<a href="/users/room">Create a meeting</a>
+<form action="/users/join" method="post">
+  <input type="text" name="room_id" value="room_id" placeholder="Enter Meeting Id">
+  <button type="submit" name="button" value="<%=name %>">Enter</button>
+</form>
+<a href="/users/logout" class="btn btn-secondary">Logout</a>
