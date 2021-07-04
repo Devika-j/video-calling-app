@@ -18,6 +18,7 @@ navigator.mediaDevices.getUserMedia({
 }).then(stream => {
   myVideoStream = stream;
   addVideoStream(myVideo, stream);
+  recognition.start();
 
   peer.on('call', call => {
     console.log('This peer is being connected');
@@ -35,6 +36,7 @@ navigator.mediaDevices.getUserMedia({
       addNewUser(userId, stream)
     }, 1000)
   })
+
 
 });
 
@@ -119,9 +121,11 @@ const muteUnmute = () => {
   if (enabled) {
     myVideoStream.getAudioTracks()[0].enabled = false;
     setUnmuteButton();
+    recognition.stop();
   } else {
     setMuteButton();
     myVideoStream.getAudioTracks()[0].enabled = true;
+    recognition.start();
   }
 }
 
@@ -156,24 +160,70 @@ const setPlayVideo = () => {
   document.querySelector('.main__video_button').innerHTML = html;
 }
 
-let element = document.getElementsByClassName("videos__group")[0];
+const element = document.getElementsByClassName("main__center")[0];
 
 function toggleFullScreen() {
-  console.log(element);
-  if (element.mozRequestFullScreen) {
-    element.mozRequestFullScreen();
-  } else if (element.webkitRequestFullScreen) {
-    element.webkitRequestFullScreen();
+  if (document.fullscreenElement) {
+    document.exitFullscreen();
+    setFullScreen();
+  } else {
+    element.requestFullscreen();
+    setExitScreen();
   }
 }
 
-invite.click((e) => {
-  prompt(
-    "Share this meeting link: ",
-    window.location.href
-  );
-});
+const setFullScreen = () => {
+  const html = `<i class="fas fa-expand"></i>`
+  document.querySelector('.fullscreen_button').innerHTML = html;
+}
+
+const setExitScreen = () => {
+  const html = `<i class="fas fa-compress"></i>`
+  document.querySelector('.fullscreen_button').innerHTML = html;
+}
 
 participants.click((e) => {
   console.log(currentUsers);
 });
+
+const button = document.getElementById("speech-button");
+result = document.getElementsByClassName("video-captions")[0];
+
+socket.on('add-captions', (username, text)=>{
+  console.log("add-captions", username, text);
+  if(listening)
+  {
+      result.innerHTML=`${username}: ${text}`;
+  }
+
+})
+
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+let listening = false;
+const recognition = new SpeechRecognition();
+
+const onResult = event => {
+  console.log(event.results);
+    for (const res of event.results) {
+        const text= res[0].transcript;
+        socket.emit('liveCaptions', text);
+      }
+};
+
+recognition.continuous = true;
+recognition.interimResults = true;
+recognition.addEventListener("result", onResult);
+
+button.addEventListener("click", () => {
+          listening = !listening;
+          if(!listening)
+          {
+            button.classList.add('captions');
+            result.innerHTML='';
+          }
+          else{
+            button.classList.remove('captions');
+          }
+
+
+         });

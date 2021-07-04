@@ -1,8 +1,30 @@
+<link rel="stylesheet" href="/dashboard.css">
 <h1 class="mt-4">Dashboard</h1>
-<p class="lead mb-3">Welcome <%=name %></p>
-<a href="/users/room">Create a meeting</a>
-<form action="/users/join" method="post">
-  <input type="text" name="room_id" value="room_id" placeholder="Enter Meeting Id">
-  <button type="submit" name="button" value="<%=name %>">Enter</button>
-</form>
+<p class="lead mb-3">Welcome <%=name%>!</p>
+
+<div style="margin-bottom: 20px" class="card card-body">
+  <form class="form-inline">
+    <div class="form-group mb-2">
+      <input type="text" readonly class="form-control-plaintext" value="Your Meeting Id:">
+    </div>
+    <div class="form-group mx-sm-3 mb-2">
+      <input type="text" readonly class="form-control" value="<%=email %>">
+    </div>
+    <button type="button" class="btn btn-primary mb-2"><a style="color: white" href="/users/room">Create a meeting</a></button>
+  </form>
+
+  <p>OR</p>
+
+  <form class="form-inline" action="/users/join" method="post">
+    <div class="form-group mb-2">
+      <input type="text" readonly class="form-control-plaintext" value="Enter Meeting Id:">
+    </div>
+    <div class="form-group mx-sm-3 mb-2">
+      <input type="text" name="room_id" class="form-control">
+    </div>
+    <button type="submit" value="<%=name %>" class="btn btn-primary mb-2">Join Room</button>
+  </form>
+
+</div>
+
 <a href="/users/logout" class="btn btn-secondary">Logout</a>

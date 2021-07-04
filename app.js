@@ -8,7 +8,6 @@ const passport = require('passport');
 const app = express();
 
 const server = require("http").Server(app);
-// const io = require("socket.io")(server);
 const io = require('socket.io')(server, {
     cors: {
         origin: "http://localhost:5000",
@@ -93,6 +92,11 @@ io.on('connection', socket => {
 
     socket.on('disconnect', () => {
       socket.broadcast.to(roomId).emit('user-disconnect', userId);
+    })
+
+    socket.on('liveCaptions', (text) => {
+      console.log(text);
+      socket.broadcast.to(roomId).emit('add-captions', userName, text);
     })
   });
 });

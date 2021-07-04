@@ -94,6 +94,10 @@ body {
   background-color: #EF5A5D;
 }
 
+.leave_meeting{
+  color: #F5F5F5;
+}
+
 .send-button {
   background-color: #10B665;
   height: 35px;
@@ -200,6 +204,15 @@ video {
   justify-content: space-between;
 }
 
+.video-captions{
+  background-color: #171717;
+  color: #F5F5F5;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  min-height: 5vh;
+}
+
 .video-left {
   background-color: #171717;
 }
@@ -212,9 +225,10 @@ video {
 
 .invite-button {
   padding-left: 10px;
+  color: #F5F5F5;
 }
 
-.unmute, .stop {
+.unmute, .stop ,.captions{
   color: #EF5A5D;
 }
 
