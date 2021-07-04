@@ -172,6 +172,13 @@ function toggleFullScreen() {
   }
 }
 
+// document.addEventListener("keydown", function(e) {
+//   console.log("esc");
+//   if (e.keyCode === 27) {
+//     setFullScreen();
+//   }
+// }, false);
+
 const setFullScreen = () => {
   const html = `<i class="fas fa-expand"></i>`
   document.querySelector('.fullscreen_button').innerHTML = html;
@@ -189,11 +196,10 @@ participants.click((e) => {
 const button = document.getElementById("speech-button");
 result = document.getElementsByClassName("video-captions")[0];
 
-socket.on('add-captions', (username, text)=>{
+socket.on('add-captions', (username, text) => {
   console.log("add-captions", username, text);
-  if(listening)
-  {
-      result.innerHTML=`${username}: ${text}`;
+  if (listening) {
+    result.innerHTML = `${username}: ${text}`;
   }
 
 })
@@ -203,11 +209,9 @@ let listening = false;
 const recognition = new SpeechRecognition();
 
 const onResult = event => {
-  console.log(event.results);
-    for (const res of event.results) {
-        const text= res[0].transcript;
-        socket.emit('liveCaptions', text);
-      }
+  const n = event.results.length - 1;
+  const text = event.results[n][0].transcript;
+  socket.emit('liveCaptions', text);
 };
 
 recognition.continuous = true;
@@ -215,15 +219,13 @@ recognition.interimResults = true;
 recognition.addEventListener("result", onResult);
 
 button.addEventListener("click", () => {
-          listening = !listening;
-          if(!listening)
-          {
-            button.classList.add('captions');
-            result.innerHTML='';
-          }
-          else{
-            button.classList.remove('captions');
-          }
+  listening = !listening;
+  if (!listening) {
+    button.classList.add('captions');
+    result.innerHTML = '';
+  } else {
+    button.classList.remove('captions');
+  }
 
 
-         });
+});
