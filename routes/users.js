@@ -3,6 +3,8 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 
+const { v4: uuidV4 } = require('uuid')
+
 //user model
 const User = require('../models/User');
 const { forwardAuthenticated } = require('../config/auth');
@@ -112,7 +114,7 @@ router.post('/chat', (req, res) => {
 //create meeting room
 router.get('/room', (req, res) => {
   res.render('chat', {
-    roomId: req.user.email,
+    roomId: uuidV4(),
     name: req.user.name
   });
 });

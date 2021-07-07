@@ -95,10 +95,14 @@ io.on('connection', socket => {
     socket.join(user.room);
 
     Chat.find({room: room}).then(messages=>{
-      console.log(messages);
+      for(var i=0;i<messages.length;i++)
+      {
+        socket.emit('message',messages[i]);
+      }
     })
 
-    socket.emit('message',formatMessage(botName, 'welcome to your chat room!',user.room));
+
+    // socket.emit('message',formatMessage(botName, 'welcome to your chat room!',user.room));
     socket.broadcast.to(user.room).emit('message',formatMessage(botName,`${user.username} has joined!`,user.room));
 
     // Send users and room info
