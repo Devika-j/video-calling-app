@@ -1,30 +1,32 @@
-<link rel="stylesheet" href="/dashboard.css">
-<h1 class="mt-4">Dashboard</h1>
-<p class="lead mb-3">Welcome <%=name%>!</p>
+<link rel="stylesheet" href="/css/dashboard.css">
 
-<div style="margin-bottom: 20px" class="card card-body">
-  <form class="form-inline">
-    <div class="form-group mb-2">
-      <input type="text" readonly class="form-control-plaintext" value="Your Meeting Id:">
-    </div>
-    <div class="form-group mx-sm-3 mb-2">
-      <input type="text" readonly class="form-control" value="<%=email %>">
-    </div>
-    <button type="button" class="btn btn-primary mb-2"><a style="color: white" href="/users/room">Create a meeting</a></button>
-  </form>
+<div class="row mt-5">
+  <div class=" col-md-6 m-auto ">
+    <h1 class="mt-4">Dashboard</h1>
+    <p class="lead mb-3">Welcome <%=name%>!</p>
+    <div class="card card-body">
 
-  <p>OR</p>
+      <form>
+        <div class="form-group">
+          <input type="text" readonly class="form-control" value="Your Meeting Id: <%=email %>">
+        </div>
+        <button type="button" class="btn btn-primary btn-block"><a style="color: white" href="/users/room">Create a meeting</a></button>
 
-  <form class="form-inline" action="/users/join" method="post">
-    <div class="form-group mb-2">
-      <input type="text" readonly class="form-control-plaintext" value="Enter Meeting Id:">
+      </form>
+
+        <p class="text-center mb-3 lead mt-4">or</p>
+
+      <form action="/users/chat" method="POST">
+        <div class="form-group">
+          <input type="text" id="room_id" name="room_id" class="form-control" placeholder="Enter Room Id: ">
+        </div>
+
+        <button type="submit" value="<%=name %>" class="btn btn-info btn-block">Join Room</button>
+      </form>
+
     </div>
-    <div class="form-group mx-sm-3 mb-2">
-      <input type="text" name="room_id" class="form-control">
-    </div>
-    <button type="submit" value="<%=name %>" class="btn btn-primary mb-2">Join Room</button>
-  </form>
+
+          <a  style="margin-top: 20px;" href="/users/logout" class="btn btn-secondary">Logout</a>
+  </div>
 
 </div>
-
-<a href="/users/logout" class="btn btn-secondary">Logout</a>

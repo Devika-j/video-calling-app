@@ -5,6 +5,9 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
 
+const formatMessage = require('./utils/messages');
+const {userJoin, getCurrentUser, userLeave, getRoomUsers} = require('./utils/users');
+
 const app = express();
 
 const server = require("http").Server(app);
@@ -73,6 +76,8 @@ app.use('/users', require('./routes/users'));
 //socket connection
 const ExpressPeerServer = require('peer').ExpressPeerServer;
 
+const Chat = require('./models/Chat');
+
 var options = {
   debug: true
 };
@@ -80,9 +85,53 @@ var options = {
 const peerServer = ExpressPeerServer(server, options);
 app.use('/peerjs', peerServer);
 
+const botName = 'Chat Bot';
+
 io.on('connection', socket => {
+
+  socket.on('joinRoom', ({ username, room }) => {
+    const user = userJoin(socket.id, username, room);
+
+    socket.join(user.room);
+
+    Chat.find({room: room}).then(messages=>{
+      console.log(messages);
+    })
+
+    socket.emit('message',formatMessage(botName, 'welcome to your chat room!',user.room));
+    socket.broadcast.to(user.room).emit('message',formatMessage(botName,`${user.username} has joined!`,user.room));
+
+    // Send users and room info
+    io.to(user.room).emit('roomUsers', {
+      room: user.room,
+      users: getRoomUsers(user.room)
+    });
+  });
+
+  socket.on('chatMessage', msg => {
+    const user = getCurrentUser(socket.id);
+
+    io.to(user.room).emit('message', formatMessage(user.username,msg,user.room));
+  });
+
+  socket.on('disconnect', () => {
+    const user = userLeave(socket.id);
+
+    if (user) {
+      io.to(user.room).emit(
+        'message',
+        formatMessage(botName, `${user.username} has left the chat!`,user.room)
+      );
+
+      // Send users and room info
+      io.to(user.room).emit('roomUsers', {
+        room: user.room,
+        users: getRoomUsers(user.room)
+      });
+    }
+  });
+
   socket.on('join-room', (roomId, userId, userName) => {
-    console.log(roomId);
     socket.join(roomId);
     socket.broadcast.to(roomId).emit('user-connected', userId);
 

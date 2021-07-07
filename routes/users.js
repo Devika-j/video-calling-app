@@ -5,12 +5,13 @@ const passport = require('passport');
 
 //user model
 const User = require('../models/User');
+const { forwardAuthenticated } = require('../config/auth');
 
 // login Page
-router.get('/login', (req, res) => res.render('login'));
+router.get('/login', forwardAuthenticated, (req, res) => res.render('login'));
 
 // Register Page
-router.get('/register', (req, res) => res.render('register'));
+router.get('/register', forwardAuthenticated, (req, res) => res.render('register'));
 
 // Register
 router.post('/register', (req, res) => {
@@ -50,6 +51,20 @@ router.post('/register', (req, res) => {
     });
   } else {
     //validation passed
+
+    User.findOne({ name: name }).then(user => {
+      if (user) {
+        errors.push({ msg: 'Username already exists' });
+        res.render('register', {
+          errors,
+          name,
+          email,
+          password,
+          password2
+        });
+      };
+    });
+
     User.findOne({ email: email }).then(user => {
       if (user) {
         errors.push({ msg: 'Email already exists' });
@@ -60,7 +75,7 @@ router.post('/register', (req, res) => {
           password,
           password2
         });
-      } else {
+      }else {
         const newUser = new User({
           name,
           email,
@@ -87,10 +102,16 @@ router.post('/register', (req, res) => {
 
 });
 
+router.post('/chat', (req, res) => {
+  res.render('chat', {
+    roomId: req.body.room_id,
+    name: req.user.name
+  });
+});
 
 //create meeting room
 router.get('/room', (req, res) => {
-  res.render('room', {
+  res.render('chat', {
     roomId: req.user.email,
     name: req.user.name
   });
@@ -100,6 +121,14 @@ router.get('/room', (req, res) => {
 router.post('/join', (req, res) => {
   res.render('room', {
     roomId: req.body.room_id,
+    name: req.body.name
+  });
+});
+
+// Back to Page
+router.get('/chat/:roomId', (req, res) => {
+  res.render('chat', {
+    roomId: req.params.roomId,
     name: req.user.name
   });
 });
