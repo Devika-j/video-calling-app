@@ -13,7 +13,7 @@ const app = express();
 const server = require("http").Server(app);
 const io = require('socket.io')(server, {
     cors: {
-        origin: "https://frozen-earth-28579.herokuapp.com",
+        origin: "http://localhost:5000",
         methods: ["GET", "POST"],
         transports: ['websocket', 'polling'],
         credentials: true
