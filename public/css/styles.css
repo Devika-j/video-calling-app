@@ -183,7 +183,7 @@ body {
 }
 
 video {
-  width: 500px;
+  width: 45%;
   margin: 0.5rem;
   vertical-align: bottom;
   object-fit: cover;
