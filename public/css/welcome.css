@@ -20,8 +20,22 @@
 
 header{
   margin-top: 3.5rem;
+  border-radius: 10px;
 }
 
 a{
   margin: 5px;
+}
+
+.white-section {
+    background-color:#FE736C;
+}
+
+.container-fluid {
+    padding: 5% 15%;
+}
+
+.footer_p{
+  margin-left: 40%;
+  color: white;
 }

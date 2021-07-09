@@ -1,0 +1,9 @@
+.main-card{
+  background-color: #F1F1F1;
+  height: 75vh;
+  border-radius: 10px;
+}
+
+.card-body{
+  padding: 2rem;
+}
