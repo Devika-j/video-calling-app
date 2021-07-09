@@ -36,7 +36,6 @@ a {
 	background: var(--light-color);
 	color: var(--dark-color-a);
 	border: 0;
-	font-size: 17px;
 }
 
 .btn:hover {
