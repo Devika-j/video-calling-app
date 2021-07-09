@@ -56,3 +56,5 @@ function outputUsers(users) {
     userList.appendChild(li);
   });
 }
+
+let clipBoard1 = new ClipboardJS('#btnCopy');

@@ -85,7 +85,8 @@ a {
 }
 
 .chat-sidebar ul li {
-	padding: 10px;
+	font-size: 18px;
+    padding: 0 15px;
 }
 
 .chat-messages {
@@ -218,4 +219,19 @@ a {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+#copyInput{
+	border: none;
+padding: 5px 5px;
+margin-bottom: 20px;
+border-radius: 5px;
+}
+
+#btnCopy{
+	border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    padding: 5px 10px;
 }
