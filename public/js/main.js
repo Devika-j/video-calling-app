@@ -52,7 +52,8 @@ function outputUsers(users) {
   userList.innerHTML = '';
   users.forEach((user) => {
     const li = document.createElement('li');
-    li.innerText = user.username;
+    // li.innerText = user.username;
+    li.innerHTML=`<i class="far fa-user-circle"></i>  ${user.username}`;
     userList.appendChild(li);
   });
 }
