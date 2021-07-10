@@ -205,6 +205,7 @@ socket.on('add-captions', (username, text) => {
 })
 
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
 let listening = false;
 const recognition = new SpeechRecognition();
 
