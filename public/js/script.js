@@ -21,7 +21,6 @@ navigator.mediaDevices.getUserMedia({
   recognition.start();
 
   peer.on('call', call => {
-    console.log('This peer is being connected');
     call.answer(stream);
     const video = document.createElement('video');
     call.on('stream', userVideoStream => {
@@ -52,7 +51,6 @@ peer.on('open', user_id => {
 });
 
 const addNewUser = (userId, stream) => {
-  console.log("Calling new user");
   const call = peer.call(userId, stream);
   const video = document.createElement('video');
   call.on('stream', userVideoStream => {
@@ -74,10 +72,6 @@ const addVideoStream = (video, stream) => {
   })
   videoGrid.append(video);
 };
-
-// socket.on('error', function (err) {
-//     console.log(err);
-// });
 
 let text = $("#chat_message");
 let messages = $(".messages");
@@ -171,13 +165,6 @@ function toggleFullScreen() {
     setExitScreen();
   }
 }
-
-// document.addEventListener("keydown", function(e) {
-//   console.log("esc");
-//   if (e.keyCode === 27) {
-//     setFullScreen();
-//   }
-// }, false);
 
 const setFullScreen = () => {
   const html = `<i class="fas fa-expand"></i>`

@@ -3,11 +3,15 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 
-const { v4: uuidV4 } = require('uuid')
+const {
+  v4: uuidV4
+} = require('uuid')
 
 //user model
 const User = require('../models/User');
-const { forwardAuthenticated } = require('../config/auth');
+const {
+  forwardAuthenticated
+} = require('../config/auth');
 
 // login Page
 router.get('/login', forwardAuthenticated, (req, res) => res.render('login'));
@@ -54,9 +58,13 @@ router.post('/register', (req, res) => {
   } else {
     //validation passed
 
-    User.findOne({ name: name }).then(user => {
+    User.findOne({
+      name: name
+    }).then(user => {
       if (user) {
-        errors.push({ msg: 'Username already exists' });
+        errors.push({
+          msg: 'Username already exists'
+        });
         res.render('register', {
           errors,
           name,
@@ -67,9 +75,13 @@ router.post('/register', (req, res) => {
       };
     });
 
-    User.findOne({ email: email }).then(user => {
+    User.findOne({
+      email: email
+    }).then(user => {
       if (user) {
-        errors.push({ msg: 'Email already exists' });
+        errors.push({
+          msg: 'Email already exists'
+        });
         res.render('register', {
           errors,
           name,
@@ -77,7 +89,7 @@ router.post('/register', (req, res) => {
           password,
           password2
         });
-      }else {
+      } else {
         const newUser = new User({
           name,
           email,
@@ -86,18 +98,18 @@ router.post('/register', (req, res) => {
 
         //hash password
         bcrypt.genSalt(10, (err, salt) => {
-                 bcrypt.hash(newUser.password, salt, (err, hash) => {
-                   if (err) throw err;
-                   //set password to hashed
-                   newUser.password = hash;
-                   newUser.save()
-                     .then(user => {
-                       req.flash('success_msg', 'You are now registered and can login');
-                       res.redirect('/users/login');
-                     })
-                     .catch(err => console.log(err));
-                 });
-               });
+          bcrypt.hash(newUser.password, salt, (err, hash) => {
+            if (err) throw err;
+            //set password to hashed
+            newUser.password = hash;
+            newUser.save()
+              .then(user => {
+                req.flash('success_msg', 'You are now registered and can login');
+                res.redirect('/users/login');
+              })
+              .catch(err => console.log(err));
+          });
+        });
       }
     });
   }

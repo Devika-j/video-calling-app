@@ -5,10 +5,16 @@ const userList = document.getElementById('users');
 const socket = io();
 
 // Join chatroom
-socket.emit('joinRoom', { username, room });
+socket.emit('joinRoom', {
+  username,
+  room
+});
 
 // Get room and users
-socket.on('roomUsers', ({ room, users }) => {
+socket.on('roomUsers', ({
+  room,
+  users
+}) => {
   outputUsers(users);
 });
 
@@ -32,7 +38,7 @@ chatForm.addEventListener('submit', (e) => {
   socket.emit('chatMessage', msg);
 
   //Clear input
-  e.target.elements.msg.value='';
+  e.target.elements.msg.value = '';
   e.target.elements.msg.focus();
 });
 
@@ -40,7 +46,7 @@ chatForm.addEventListener('submit', (e) => {
 function outputMessage(message) {
   const div = document.createElement('div');
   div.classList.add('message');
-  div.innerHTML=`<p class="meta">${message.username}<span>  ${message.time}</span></p>
+  div.innerHTML = `<p class="meta">${message.username}<span>  ${message.time}</span></p>
   <p class="text">
     ${message.text}
   </p>`;
@@ -53,7 +59,7 @@ function outputUsers(users) {
   users.forEach((user) => {
     const li = document.createElement('li');
     // li.innerText = user.username;
-    li.innerHTML=`<i class="far fa-user-circle"></i>  ${user.username}`;
+    li.innerHTML = `<i class="far fa-user-circle"></i>  ${user.username}`;
     userList.appendChild(li);
   });
 }

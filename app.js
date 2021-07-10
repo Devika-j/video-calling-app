@@ -6,19 +6,24 @@ const session = require('express-session');
 const passport = require('passport');
 
 const formatMessage = require('./utils/messages');
-const {userJoin, getCurrentUser, userLeave, getRoomUsers} = require('./utils/users');
+const {
+  userJoin,
+  getCurrentUser,
+  userLeave,
+  getRoomUsers
+} = require('./utils/users');
 
 const app = express();
 
 const server = require("http").Server(app);
 const io = require('socket.io')(server, {
-    cors: {
-        origin: "http://localhost:5000",
-        methods: ["GET", "POST"],
-        transports: ['websocket', 'polling'],
-        credentials: true
-    },
-    allowEIO3: true
+  cors: {
+    origin: "http://localhost:5000",
+    methods: ["GET", "POST"],
+    transports: ['websocket', 'polling'],
+    credentials: true
+  },
+  allowEIO3: true
 });
 
 
@@ -31,8 +36,9 @@ const db = require('./config/keys').MongoURI;
 //Connect to MongoDB
 mongoose
   .connect(
-    db,
-    { useNewUrlParser: true}
+    db, {
+      useNewUrlParser: true
+    }
   )
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log(err));
@@ -43,10 +49,12 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
 //bodyparser
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({
+  extended: false
+}));
 
 //express session
-var sessionMiddleware= session({
+var sessionMiddleware = session({
   secret: 'secret',
   resave: true,
   saveUninitialized: true
@@ -89,21 +97,25 @@ const botName = 'Chat Bot';
 
 io.on('connection', socket => {
 
-  socket.on('joinRoom', ({ username, room }) => {
+  socket.on('joinRoom', ({
+    username,
+    room
+  }) => {
     const user = userJoin(socket.id, username, room);
 
     socket.join(user.room);
 
-    Chat.find({room: room}).then(messages=>{
-      for(var i=0;i<messages.length;i++)
-      {
-        socket.emit('message',messages[i]);
+    Chat.find({
+      room: room
+    }).then(messages => {
+      for (var i = 0; i < messages.length; i++) {
+        socket.emit('message', messages[i]);
       }
     })
 
 
     // socket.emit('message',formatMessage(botName, 'welcome to your chat room!',user.room));
-    socket.broadcast.to(user.room).emit('message',formatMessage(botName,`${user.username} has joined!`,user.room));
+    socket.broadcast.to(user.room).emit('message', formatMessage(botName, `${user.username} has joined!`, user.room));
 
     // Send users and room info
     io.to(user.room).emit('roomUsers', {
@@ -115,7 +127,7 @@ io.on('connection', socket => {
   socket.on('chatMessage', msg => {
     const user = getCurrentUser(socket.id);
 
-    io.to(user.room).emit('message', formatMessage(user.username,msg,user.room));
+    io.to(user.room).emit('message', formatMessage(user.username, msg, user.room));
   });
 
   socket.on('disconnect', () => {
@@ -124,7 +136,7 @@ io.on('connection', socket => {
     if (user) {
       io.to(user.room).emit(
         'message',
-        formatMessage(botName, `${user.username} has left the chat!`,user.room)
+        formatMessage(botName, `${user.username} has left the chat!`, user.room)
       );
 
       // Send users and room info

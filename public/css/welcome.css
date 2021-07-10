@@ -18,29 +18,29 @@
   background: #555;
 }
 
-header{
+header {
   margin-top: 3.5rem;
   border-radius: 10px;
 }
 
-a{
+a {
   margin: 5px;
 }
 
 .white-section {
-    background-color:#FE736C;
+  background-color: #FE736C;
 }
 
 .container-fluid {
-    padding: 5%;
-    text-align: center;
+  padding: 5%;
+  text-align: center;
 }
 
-.footer_p{
+.footer_p {
   color: white;
 }
 
-.feature-box{
+.feature-box {
   text-align: center;
   padding: 10px;
 }
