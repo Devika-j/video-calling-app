@@ -33,9 +33,14 @@ a{
 
 .container-fluid {
     padding: 5%;
+    text-align: center;
 }
 
 .footer_p{
-  margin-left: 40%;
   color: white;
+}
+
+.feature-box{
+  text-align: center;
+  padding: 10px;
 }
