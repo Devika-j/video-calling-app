@@ -14,4 +14,6 @@ router.get('/dashboard', ensureAuthenticated, (req, res) => res.render('dashboar
   email: req.user.email
 }));
 
+
+
 module.exports = router;
